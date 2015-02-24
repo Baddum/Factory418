@@ -8,7 +8,7 @@ Factory418
 [![License](https://poser.pugx.org/baddum/factory418/license.svg)](http://opensource.org/licenses/MIT)
 
 
-`Factory418` is a small PHP library to transform any of your own class in factory.
+`Factory418` provides a PHP trait to easily create factory.
 
 1. [Features](#features)
 2. [How to Install](#how-to-install)
@@ -24,7 +24,7 @@ Transform any of your class by using the `FactoryTrait`:
 
 ```php
 use Baddum\Factory418\FactoryTrait;
-class MyFactory
+class MyClass
 {
     use FactoryTrait;
 }
@@ -33,7 +33,7 @@ class MyFactory
 Use the `registerClass()` method to register a class on one or multiple indexes:
 
 ```php
-$factory = (new MyFactory)
+$factory = (new MyClass)
 	->registerClass('RuntimeException', 'Runtime')
 	->registerClass('PDOException', ['PDO', 'SQL']);
 ```
@@ -41,7 +41,7 @@ $factory = (new MyFactory)
 Use the `newInstance()` method to instance a class according to an index:
 
 ```php
-$instance = $factory->newInstance('SQL');
+$instance = $factory->newInstance('sql');
 ```
 
 

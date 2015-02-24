@@ -1,7 +1,7 @@
 {
     "name": "baddum/factory418",
     "type": "library",
-    "description": "A library to transform any of your own class in factory",
+    "description": "A trait to easily create factory",
     "keywords": ["factory"],
     "license": "MIT",
     "homepage": "https://github.com/Baddum/Factory418",
