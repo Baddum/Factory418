@@ -19,14 +19,14 @@ trait FactoryTrait
         }
         $factoryName = get_called_class();
         if (!isset(static::$indexList[$factoryName])) {
-            static::$indexList[$factoryName] = [];
+            self::$indexList[$factoryName] = [];
         }
         if (!is_array($indexList)) {
             $indexList = [$indexList];
         }
         foreach ($indexList as $index) {
             $id = strtolower($index);
-            static::$indexList[$factoryName][$id] = $className;
+            self::$indexList[$factoryName][$id] = $className;
         }
         return $this;
     }
@@ -34,14 +34,14 @@ trait FactoryTrait
     public function newInstance($index)
     {
         $factoryName = get_called_class();
-        if (!isset(static::$indexList[$factoryName])) {
+        if (!isset(self::$indexList[$factoryName])) {
             return $this->onNoClassRegistered($index);
         }
         $id = strtolower($index);
-        if (!isset(static::$indexList[$factoryName][$id])) {
+        if (!isset(self::$indexList[$factoryName][$id])) {
             return $this->onNoClassRegistered($index);
         }
-        $className = static::$indexList[$factoryName][$id];
+        $className = self::$indexList[$factoryName][$id];
         return new $className;
     }
 
@@ -51,8 +51,5 @@ trait FactoryTrait
     protected function onNoClassRegistered($index)
     {
         throw new \RuntimeException('No class registered for the index: ' . $index);
-        return false;
     }
-
-
 }
