@@ -18,7 +18,7 @@ trait FactoryTrait
             $className = get_class($className);
         }
         $factoryName = get_called_class();
-        if (!isset(static::$indexList[$factoryName])) {
+        if (!isset(self::$indexList[$factoryName])) {
             self::$indexList[$factoryName] = [];
         }
         if (!is_array($indexList)) {
