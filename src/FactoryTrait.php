@@ -35,11 +35,11 @@ trait FactoryTrait
     {
         $factoryName = get_called_class();
         if (!isset(self::$indexList[$factoryName])) {
-            return $this->onNoClassRegistered($index);
+            return $this->onNoClassIndexFound($index);
         }
         $id = strtolower($index);
         if (!isset(self::$indexList[$factoryName][$id])) {
-            return $this->onNoClassRegistered($index);
+            return $this->onNoClassIndexFound($index);
         }
         $className = self::$indexList[$factoryName][$id];
         return new $className;
@@ -48,7 +48,7 @@ trait FactoryTrait
 
     /* PROTECTED METHODS
      *************************************************************************/
-    protected function onNoClassRegistered($index)
+    protected function onNoClassIndexFound($index)
     {
         throw new \RuntimeException('No class registered for the index: ' . $index);
     }
