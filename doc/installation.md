@@ -6,7 +6,7 @@ and as such installable via [Composer](http://getcomposer.org/).
 
 Run the following command in your console:
 
-```
-composer require baddum/factory418
-```
+	```sh
+	composer require baddum/factory418
+	```
 
