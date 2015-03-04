@@ -21,8 +21,8 @@ Code Guidelines
 
 Your code must:
 
-1. Works with PHP 5.4 and later
-2. Follow the [PSR2 standard](https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-2-coding-style-guide.md)
+1. Works with PHP 5.4 and later.
+2. Follow the [PSR2 standard](https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-2-coding-style-guide.md).
 3. Be accompanied by passing [phpunit](https://github.com/sebastianbergmann/phpunit/) tests.
 
 
@@ -30,6 +30,6 @@ Your code must:
 Pull requests Workflow
 ----------
 
-1. Fork the library repository
-2. Create a new branch for each feature or improvement
-3. Send a pull request from each feature branch to the **v1.x** branch
+1. Fork the library repository.
+2. Create a new branch for each feature or improvement.
+3. Send a pull request from each feature branch to the **v1.x** branch.
