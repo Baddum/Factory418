@@ -39,10 +39,14 @@ trait FactoryTrait
         return $this->getIndex($index);
     }
 
-    public function newInstance($index)
+    public function newInstance($index, $arguments = [])
     {
         $className = $this->retrieveClass($index);
-        return new $className;
+        $reflect  = new \ReflectionClass($className);
+        if (!is_array($arguments)) {
+            $arguments = [$arguments];
+        }
+        return $reflect->newInstanceArgs($arguments);
     }
 
 

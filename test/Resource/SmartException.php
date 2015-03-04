@@ -8,8 +8,13 @@ class SmartException extends \Exception
 {
     use FactoryTrait;
 
+    protected function onClassIndexOverride($index)
+    {
+        
+    }
+
     protected function onNoClassIndexFound($index)
     {
-        return $this;
+        return get_class($this);
     }
 }

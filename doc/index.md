@@ -1,4 +1,7 @@
-Transform any of your class by using the `FactoryTrait`:
+A factory provides an abstraction of a class constructor, so your code is not tied to specific class.
+It could ease change and refactoring.
+
+You can transform any of your class into a factory by using the `FactoryTrait`:
 
 	```php
 	use Baddum\Factory418\FactoryTrait;
