@@ -19,6 +19,6 @@ Use the `registerClass()` method to register a class on one or multiple indexes:
 Use the `newInstance()` method to instance a class according to an index:
 
 	```php
-	$factory->newInstance('sql');
+	(new MyClass)->newInstance('sql');
 	// Return an instance of `PDOException`
 	```
