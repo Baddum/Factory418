@@ -12,6 +12,13 @@ trait FactoryTrait
 
     /* PUBLIC METHODS
      *************************************************************************/
+
+    /**
+     * @param string|object $className
+     * @param array|string $indexList
+     * 
+     * @return FactoryTrait (for chaining)
+     */
     public function registerClass($className, $indexList)
     {
         if (is_object($className)) {
@@ -30,6 +37,11 @@ trait FactoryTrait
         return $this;
     }
 
+    /**
+     * @param string $index
+     *
+     * @return string
+     */
     public function retrieveClass($index)
     {
         $index = strtolower($index);
@@ -39,6 +51,12 @@ trait FactoryTrait
         return $this->getIndex($index);
     }
 
+    /**
+     * @param string $index
+     * @param array|string $arguments (optional)
+     *
+     * @return string
+     */
     public function newInstance($index, $arguments = [])
     {
         $className = $this->retrieveClass($index);
@@ -79,11 +97,25 @@ trait FactoryTrait
 
     /* PROTECTED ERROR METHODS
      *************************************************************************/
+
+    /**
+     * @param string $index
+     * @param string $className
+     *
+     * @throw RuntimeException
+     * @return void
+     */
     protected function onClassIndexOverride($index, $className)
     {
         throw new \RuntimeException('Class already registered for the index: ' . $index);
     }
-    
+
+    /**
+     * @param string $index
+     *
+     * @throw RuntimeException
+     * @return string
+     */
     protected function onNoClassIndexFound($index)
     {
         throw new \RuntimeException('No class registered for the index: ' . $index);
