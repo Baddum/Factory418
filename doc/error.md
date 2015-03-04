@@ -13,10 +13,10 @@ You can override the `onClassIndexOverride($index, $className)` method to change
 	{
 		use FactoryTrait;
 		
-    protected function onClassIndexOverride($index, $className)
-    {
-        // Do nothing (and register the class normally)
-    }
+		protected function onClassIndexOverride($index, $className)
+		{
+			// Do nothing (and register the class normally)
+		}
 	}
 	```
 
@@ -33,10 +33,10 @@ You can override the `onNoClassIndexFound($index)` method to change this behavio
 	{
 		use FactoryTrait;
 		
-    protected function onNoClassIndexFound($index)
-    {
-    	// Return a default class	
+		protected function onNoClassIndexFound($index)
+		{
+			// Return a default class	
 			return 'Exception';
-    }
+		}
 	}
 	```
