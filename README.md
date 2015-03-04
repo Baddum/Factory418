@@ -10,51 +10,7 @@ Factory418
 
 `Factory418` provides a PHP trait to easily create factory.
 
-1. [Features](#features)
-2. [How to Install](#how-to-install)
-3. [How to Contribute](#how-to-contribute)
-4. [Author & Community](#author--community)
-
-
-
-Features
---------------
-
-Transform any of your class by using the `FactoryTrait`:
-
-```php
-use Baddum\Factory418\FactoryTrait;
-class MyClass
-{
-    use FactoryTrait;
-}
-```
-
-Use the `registerClass()` method to register a class on one or multiple indexes:
-
-```php
-$factory = (new MyClass)
-	->registerClass('RuntimeException', 'Runtime')
-	->registerClass('PDOException', ['PDO', 'SQL']);
-```
-
-Use the `newInstance()` method to instance a class according to an index:
-
-```php
-$instance = $factory->newInstance('sql');
-```
-
-
-
-How to Install
---------
-
-This library package requires `PHP 5.4` or later.<br>
-Install [Composer](http://getcomposer.org/doc/01-basic-usage.md#installation) and run the following command to get the latest version:
-
-```sh
-composer require baddum/factory418
-```
+Read the documentation on the [official website](http://baddum.com/factory418/).
 
 
 
