@@ -17,7 +17,7 @@ trait FactoryTrait
      * @param string|object $className
      * @param array|string $indexList
      * 
-     * @return FactoryTrait (for chaining)
+     * @return self
      */
     public function registerClass($className, $indexList)
     {
