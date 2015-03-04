@@ -10,7 +10,15 @@ Factory418
 
 `Factory418` provides a PHP trait to easily create factory.
 
-Read the documentation on the [official website](http://baddum.com/factory418/).
+
+
+Documentation
+--------
+
+A full documentation is available on the official website:
+
+	* [Quick Start](http://baddum.com/factory418/).
+	* [Installation](http://baddum.com/factory418/installation).
 
 
 
