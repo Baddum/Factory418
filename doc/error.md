@@ -1,7 +1,8 @@
 Error handling
 ======
 
-### onClassIndexOverride()
+onClassIndexOverride()
+------
 
 When we try to register a class over another one, a `RuntimeException` is thrown.
 You can override the `onClassIndexOverride($index, $className)` method to change this behaviour:
@@ -19,7 +20,9 @@ You can override the `onClassIndexOverride($index, $className)` method to change
 	}
 	```
 
-### onNoClassIndexFound()
+
+onNoClassIndexFound()
+------
 
 When we try to retrieve a class and no one is registered, a `RuntimeException` is thrown.
 You can override the `onNoClassIndexFound($index)` method to change this behaviour:

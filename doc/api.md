@@ -1,7 +1,8 @@
 API Documentation
 ======
 
-### registerClass()
+registerClass()
+------
 
 Use the `registerClass($class, $index)` method to register a class on one or multiple indexes:
 
@@ -15,7 +16,8 @@ Use the `registerClass($class, $index)` method to register a class on one or mul
 (i) You register a class by its name (string) or by an instance (object).
 
 
-### retrieveClass()
+retrieveClass()
+------
 
 Use the `(string) retrieveClass($index)` method to get a class (string) according to an index:
 
@@ -25,7 +27,8 @@ Use the `(string) retrieveClass($index)` method to get a class (string) accordin
 	```
 
 
-### newInstance()
+newInstance()
+------
 
 Use the `(object) newInstance($index, $arguments = [])` method to instance a class according to an index:
 
