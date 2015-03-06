@@ -17,8 +17,10 @@ Documentation
 
 A full documentation is available on the official website:
 
-	* [Quick Start](http://baddum.com/factory418/).
-	* [Installation](http://baddum.com/factory418/installation).
+ * [Quick Start](http://baddum.com/factory418/).
+ * [Installation](http://baddum.com/factory418/installation).
+ * [API Documentation](http://baddum.com/factory418/api).
+ * [Error Handling](http://baddum.com/factory418/error).
 
 
 
