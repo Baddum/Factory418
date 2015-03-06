@@ -16,10 +16,11 @@ trait FactoryTrait
     /**
      * @param string|object $className
      * @param array|string $indexList
+     * @param boolean $override
      * 
      * @return self
      */
-    public function registerClass($className, $indexList)
+    public function registerClass($className, $indexList, $override = false)
     {
         if (is_object($className)) {
             $className = get_class($className);
@@ -30,7 +31,7 @@ trait FactoryTrait
         foreach ($indexList as $index) {
             $index = strtolower($index);
             if ($this->hasIndex($index)) {
-                $this->onClassIndexOverride($index, $className);
+                $this->onClassIndexOverride($index, $className, $override);
             }
             $this->setIndex($index, $className);
         }
@@ -105,9 +106,11 @@ trait FactoryTrait
      * @throw RuntimeException
      * @return void
      */
-    protected function onClassIndexOverride($index, $className)
+    protected function onClassIndexOverride($index, $className, $override)
     {
-        throw new \RuntimeException('Class already registered for the index: ' . $index);
+        if (!$override) {
+            throw new \RuntimeException('Class already registered for the index: ' . $index);
+        }
     }
 
     /**

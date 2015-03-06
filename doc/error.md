@@ -13,7 +13,7 @@ You can override the `onClassIndexOverride($index, $className)` method to change
 	{
 		use FactoryTrait;
 		
-		protected function onClassIndexOverride($index, $className)
+		protected function onClassIndexOverride($index, $className, $override)
 		{
 			// Do nothing (and register the class normally)
 		}

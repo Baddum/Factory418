@@ -4,7 +4,11 @@ API Documentation
 registerClass()
 ------
 
-Use the `registerClass($class, $index)` method to register a class on one or multiple indexes:
+	```php
+	(self) function registerClass($class, $index, $override)
+	```
+
+Use the `registerClass()` method to register a class on one or multiple indexes:
 
 	```php
 	$factory = (new MyClass)
@@ -15,11 +19,22 @@ Use the `registerClass($class, $index)` method to register a class on one or mul
 (i) Indexes are case insensitive.
 (i) You register a class by its name (string) or by an instance (object).
 
+By default, you can not register an index if it is already reserved.
+You can ask authorization to override by passing a third parameter to `true`:
+
+	```php
+	(new MyClass)->registerClass('PDOException', 'SQL', true);
+	```
+
 
 retrieveClass()
 ------
 
-Use the `(string) retrieveClass($index)` method to get a class (string) according to an index:
+	```php
+	(string) function retrieveClass($index)
+	```
+
+Use the `retrieveClass()` method to get a class (string) according to an index:
 
 	```php
 	(new MyClass)->retrieveClass('sql');
@@ -30,7 +45,11 @@ Use the `(string) retrieveClass($index)` method to get a class (string) accordin
 newInstance()
 ------
 
-Use the `(object) newInstance($index, $arguments = [])` method to instance a class according to an index:
+	```php
+	(object) function newInstance($index, $arguments = [])
+	```
+
+Use the `newInstance()` method to instance a class according to an index:
 
 	```php
 	(new MyClass)->newInstance('sql');

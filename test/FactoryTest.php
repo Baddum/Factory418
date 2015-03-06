@@ -76,6 +76,13 @@ class FactoryTest extends \PHPUnit_Framework_TestCase
         (new SimpleFactory)->registerClass('Exception', 'std');
     }
 
+    public function testClassIndexOverrideAllowed()
+    {
+        (new SimpleFactory)->registerClass('Exception', 'std', true);
+        $instance = (new SimpleFactory)->newInstance('std');
+        $this->assertInstanceOf('Exception', $instance);
+    }
+
     public function testClassIndexOverrideCustom()
     {
         (new SmartException)->registerClass('RuntimeException', 'sql');
