@@ -17,7 +17,7 @@ trait FactoryTrait
      * @param string|object $className
      * @param array|string $indexList
      * @param boolean $override
-     * 
+     *
      * @return self
      */
     public function registerClass($className, $indexList, $override = false)
@@ -29,11 +29,25 @@ trait FactoryTrait
             $indexList = [$indexList];
         }
         foreach ($indexList as $index) {
-            $index = strtolower($index);
-            if ($this->hasIndex($index)) {
-                $this->onClassIndexOverride($index, $className, $override);
-            }
-            $this->setIndex($index, $className);
+            $this->_setFactoryIndex($index, $className, $override);
+        }
+        return $this;
+    }
+
+    /**
+     * @param object $instance
+     * @param array|string $indexList
+     * @param boolean $override
+     *
+     * @return self
+     */
+    public function registerInstance($instance, $indexList, $override = false)
+    {
+        if (!is_array($indexList)) {
+            $indexList = [$indexList];
+        }
+        foreach ($indexList as $index) {
+            $this->_setFactoryIndex($index, $instance, $override);
         }
         return $this;
     }
@@ -43,36 +57,28 @@ trait FactoryTrait
      *
      * @return string
      */
-    public function retrieveClass($index)
+    public function getInstance($index)
     {
         $index = strtolower($index);
-        if (!$this->hasIndex($index)) {
-            return $this->onNoClassIndexFound($index);
+        if (!$this->_hasFactoryIndex($index)) {
+            return $this->_onFactoryIndexNotFound($index);
         }
-        return $this->getIndex($index);
-    }
-
-    /**
-     * @param string $index
-     * @param array|string $arguments (optional)
-     *
-     * @return string
-     */
-    public function newInstance($index, $arguments = [])
-    {
-        $className = $this->retrieveClass($index);
-        $reflect  = new \ReflectionClass($className);
-        if (!is_array($arguments)) {
-            $arguments = [$arguments];
+        $instance = $this->_getFactoryIndex($index);
+        if (is_string($instance)) {
+            return new $instance;
         }
-        return $reflect->newInstanceArgs($arguments);
+        return $instance;
     }
 
 
     /* PRIVATE INDEX METHODS
      *************************************************************************/
-    private function setIndex($index, $className)
+    private function _setFactoryIndex($index, $className, $override)
     {
+        $index = strtolower($index);
+        if ($this->_hasFactoryIndex($index)) {
+            $this->_onFactoryIndexOverride($index, $className, $override);
+        }
         $factoryName = get_called_class();
         if (!isset(self::$indexList[$factoryName])) {
             self::$indexList[$factoryName] = [];
@@ -80,7 +86,7 @@ trait FactoryTrait
         self::$indexList[$factoryName][$index] = $className;
     }
 
-    private function hasIndex($index)
+    private function _hasFactoryIndex($index)
     {
         $factoryName = get_called_class();
         if (!isset(self::$indexList[$factoryName])) {
@@ -89,7 +95,7 @@ trait FactoryTrait
         return isset(self::$indexList[$factoryName][$index]);
     }
 
-    private function getIndex($index)
+    private function _getFactoryIndex($index)
     {
         $factoryName = get_called_class();
         return self::$indexList[$factoryName][$index];
@@ -101,15 +107,16 @@ trait FactoryTrait
 
     /**
      * @param string $index
-     * @param string $className
+     * @param mixed $value
+     * @param boolean $override
      *
      * @throw RuntimeException
      * @return void
      */
-    protected function onClassIndexOverride($index, $className, $override)
+    protected function _onFactoryIndexOverride($index, $value, $override)
     {
         if (!$override) {
-            throw new \RuntimeException('Class already registered for the index: ' . $index);
+            throw new \RuntimeException('Try to register "' . $value . '", but index already in use: ' . $index);
         }
     }
 
@@ -119,8 +126,8 @@ trait FactoryTrait
      * @throw RuntimeException
      * @return string
      */
-    protected function onNoClassIndexFound($index)
+    protected function _onFactoryIndexNotFound($index)
     {
-        throw new \RuntimeException('No class registered for the index: ' . $index);
+        throw new \RuntimeException('Try to retrieve "' . $index . '", but nothing found');
     }
 }

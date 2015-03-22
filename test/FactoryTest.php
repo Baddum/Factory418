@@ -15,78 +15,62 @@ class FactoryTest extends \PHPUnit_Framework_TestCase
         (new SimpleFactory)->registerClass('stdClass', 'std');
         (new SmartException)
             ->registerClass('Exception', 'std')
-            ->registerClass(new \PDOException, ['PDO', 'SQL']);
+            ->registerClass(new \PDOException, ['PDO', 'SQL'])
+            ->registerInstance(new \RuntimeException('Something bad happened!'), '500');
     }
 
-    public function testRetrieveClass()
+    public function testGetInstance()
     {
-        $className = (new SimpleFactory)->retrieveClass('std');
-        $this->assertEquals('stdClass', $className);
-    }
-
-    public function testNewInstance()
-    {
-        $instance = (new SimpleFactory)->newInstance('std');
+        $instance = (new SimpleFactory)->getInstance('std');
         $this->assertInstanceOf('stdClass', $instance);
     }
 
-    public function testNewInstanceWithOneArgument()
-    {
-        $instance = (new SmartException)->newInstance('sql', 'test');
-        $this->assertInstanceOf('PDOException', $instance);
-        $this->assertEquals('test', $instance->getMessage());
-    }
-
-    public function testNewInstanceWithArguments()
-    {
-        $instance = (new SmartException)->newInstance('sql', ['test', 418]);
-        $this->assertInstanceOf('PDOException', $instance);
-        $this->assertEquals('test', $instance->getMessage());
-        $this->assertEquals(418, $instance->getCode());
-    }
-
-    public function testNewInstanceMultiple()
+    public function testGetInstanceMultiple()
     {
         $smartException = new SmartException;
-        $instance = $smartException->newInstance('std');
+        $instance = $smartException->getInstance('std');
         $this->assertInstanceOf('Exception', $instance);
-        $instance = $smartException->newInstance('PDO');
+        $instance = $smartException->getInstance('PDO');
         $this->assertInstanceOf('PDOException', $instance);
-        $instance = $smartException->newInstance('SQL');
+        $instance = $smartException->getInstance('SQL');
         $this->assertInstanceOf('PDOException', $instance);
-        $instance = $smartException->newInstance('sql');
+        $instance = $smartException->getInstance('sql');
         $this->assertInstanceOf('PDOException', $instance);
+        $instance = $smartException->getInstance('500');
+        $this->assertInstanceOf('RuntimeException', $instance);
+        $this->assertEquals('Something bad happened!', $instance->getMessage());
     }
 
-    public function testClassNotFound()
+    public function testIndexNotFound()
     {
         $this->setExpectedException('RuntimeException');
-        (new SimpleFactory)->newInstance('coco');
+        (new SimpleFactory)->getInstance('coco');
     }
 
-    public function testClassNotFoundCustom()
+    public function testIndexNotFoundCustom()
     {
-        $instance = (new SmartException)->newInstance('coco');
-        $this->assertInstanceOf(get_class(new SmartException), $instance);
+        $factory = new SmartException;
+        $instance = $factory->getInstance('coco');
+        $this->assertEquals($factory, $instance);
     }
 
-    public function testClassIndexOverride()
+    public function testIndexOverride()
     {
         $this->setExpectedException('RuntimeException');
         (new SimpleFactory)->registerClass('Exception', 'std');
     }
 
-    public function testClassIndexOverrideAllowed()
+    public function testIndexOverrideAllowed()
     {
         (new SimpleFactory)->registerClass('Exception', 'std', true);
-        $instance = (new SimpleFactory)->newInstance('std');
+        $instance = (new SimpleFactory)->getInstance('std');
         $this->assertInstanceOf('Exception', $instance);
     }
 
-    public function testClassIndexOverrideCustom()
+    public function testIndexOverrideCustom()
     {
         (new SmartException)->registerClass('RuntimeException', 'sql');
-        $instance = (new SmartException)->newInstance('sql');
+        $instance = (new SmartException)->getInstance('sql');
         $this->assertInstanceOf('RuntimeException', $instance);
     }
 }
