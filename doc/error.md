@@ -1,11 +1,11 @@
 Error handling
 ======
 
-onClassIndexOverride()
+_onFactoryIndexOverride()
 ------
 
 When we try to register a class over another one, a `RuntimeException` is thrown.
-You can override the `onClassIndexOverride($index, $className)` method to change this behaviour:
+You can override the `_onFactoryIndexOverride()` method to change this behaviour:
 
 	```php
 	use Baddum\Factory418\FactoryTrait;
@@ -13,7 +13,7 @@ You can override the `onClassIndexOverride($index, $className)` method to change
 	{
 		use FactoryTrait;
 		
-		protected function onClassIndexOverride($index, $className, $override)
+		protected function _onFactoryIndexOverride($index, $value, $override)
 		{
 			// Do nothing (and register the class normally)
 		}
@@ -21,11 +21,11 @@ You can override the `onClassIndexOverride($index, $className)` method to change
 	```
 
 
-onNoClassIndexFound()
+_onFactoryIndexNotFound()
 ------
 
 When we try to retrieve a class and no one is registered, a `RuntimeException` is thrown.
-You can override the `onNoClassIndexFound($index)` method to change this behaviour:
+You can override the `_onFactoryIndexNotFound()` method to change this behaviour:
 
 	```php
 	use Baddum\Factory418\FactoryTrait;
@@ -33,10 +33,10 @@ You can override the `onNoClassIndexFound($index)` method to change this behavio
 	{
 		use FactoryTrait;
 		
-		protected function onNoClassIndexFound($index)
+		protected function _onFactoryIndexNotFound($index)
 		{
-			// Return a default class	
-			return 'Exception';
+			// Return a default class	or instance
+			return $this;
 		}
 	}
 	```

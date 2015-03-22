@@ -5,61 +5,65 @@ registerClass()
 ------
 
 	```php
-	(self) function registerClass($class, $index, $override)
+	self registerClass(string|object $class, string|array $index, bool $override = false)
 	```
 
-Use the `registerClass()` method to register a class on one or multiple indexes:
+Use the `registerClass()` method to register a class on one or several indexes.
 
 	```php
-	$factory = (new MyClass)
-		->registerClass('RuntimeException', 'Runtime')
-		->registerClass(new \PDOException, ['PDO', 'SQL']);
+	$factory = (new FileReader)
+		->registerClass('IniFileReader', 'ini')
+		->registerClass('YamlFileReader, ['yml', 'yaml']);
 	```
 
 (i) Indexes are case insensitive.
-(i) You register a class by its name (string) or by an instance (object).
+
+You can register a class by its name (string) or by an instance (object).
+The factory will produce a new instance of this class at every call.
 
 By default, you can not register an index if it is already reserved.
 You can ask authorization to override by passing a third parameter to `true`:
 
 	```php
-	(new MyClass)->registerClass('PDOException', 'SQL', true);
+	(new FileReader)->registerClass('MockIniFileReader', 'ini', true);
 	```
 
 
-retrieveClass()
+registerInstance()
 ------
 
 	```php
-	(string) function retrieveClass($index)
+	self registerInstance(object $instance, string|array $index, bool $override = false)
 	```
 
-Use the `retrieveClass()` method to get a class (string) according to an index:
+Use the `registerInstance()` method to register an object instance on one or several indexes.
 
 	```php
-	(new MyClass)->retrieveClass('sql');
-	// Return the string "PDOException"
+	$factory = (new MyApplication)
+		->registerInstance($monolog, 'logger');
+	```
+
+(i) Indexes are case insensitive.
+
+By default, you can not register an index if it is already reserved.
+You can ask authorization to override by passing a third parameter to `true`:
+
+	```php
+	(new MyApplication)->registerInstance($mockMonolog, 'logger', true);
 	```
 
 
-newInstance()
+getInstance()
 ------
 
 	```php
-	(object) function newInstance($index, $arguments = [])
+	object getInstance(string $index)
 	```
 
-Use the `newInstance()` method to instance a class according to an index:
+Use the `getInstance()` method to get an instance according to an index:
 
 	```php
-	(new MyClass)->newInstance('sql');
-	// Return an instance of `PDOException`
+	(new FileReader)->getInstance('ini');
+	// Return an instance of `IniFileReader`
 	```
 	
-The second argument allow you to pass the constructor parameters:
-
-	```php
-	(new MyClass)->newInstance('sql', ['Error when retrieving the database', 500]);
-	// Return an instance of `PDOException` with a message and a code
-	```
-
