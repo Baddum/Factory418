@@ -12,34 +12,34 @@ class FactoryTest extends \PHPUnit_Framework_TestCase
 
     public static function setUpBeforeClass()
     {
-        (new SimpleFactory)->registerClass('stdClass', 'std');
-        (new SmartException)
+        (new SimpleFactory())->registerClass('stdClass', 'std');
+        (new SmartException())
             ->registerClass('Exception', 'std')
-            ->registerClass(new \PDOException, ['PDO', 'SQL']);
+            ->registerClass(new \PDOException(), ['PDO', 'SQL']);
     }
 
     public function testRetrieveClass()
     {
-        $className = (new SimpleFactory)->retrieveClass('std');
+        $className = (new SimpleFactory())->retrieveClass('std');
         $this->assertEquals('stdClass', $className);
     }
 
     public function testNewInstance()
     {
-        $instance = (new SimpleFactory)->newInstance('std');
+        $instance = (new SimpleFactory())->newInstance('std');
         $this->assertInstanceOf('stdClass', $instance);
     }
 
     public function testNewInstanceWithOneArgument()
     {
-        $instance = (new SmartException)->newInstance('sql', 'test');
+        $instance = (new SmartException())->newInstance('sql', 'test');
         $this->assertInstanceOf('PDOException', $instance);
         $this->assertEquals('test', $instance->getMessage());
     }
 
     public function testNewInstanceWithArguments()
     {
-        $instance = (new SmartException)->newInstance('sql', ['test', 418]);
+        $instance = (new SmartException())->newInstance('sql', ['test', 418]);
         $this->assertInstanceOf('PDOException', $instance);
         $this->assertEquals('test', $instance->getMessage());
         $this->assertEquals(418, $instance->getCode());
@@ -47,7 +47,7 @@ class FactoryTest extends \PHPUnit_Framework_TestCase
 
     public function testNewInstanceMultiple()
     {
-        $smartException = new SmartException;
+        $smartException = new SmartException();
         $instance = $smartException->newInstance('std');
         $this->assertInstanceOf('Exception', $instance);
         $instance = $smartException->newInstance('PDO');
@@ -61,25 +61,25 @@ class FactoryTest extends \PHPUnit_Framework_TestCase
     public function testClassNotFound()
     {
         $this->setExpectedException('RuntimeException');
-        (new SimpleFactory)->newInstance('coco');
+        (new SimpleFactory())->newInstance('coco');
     }
 
     public function testClassNotFoundCustom()
     {
-        $instance = (new SmartException)->newInstance('coco');
-        $this->assertInstanceOf(get_class(new SmartException), $instance);
+        $instance = (new SmartException())->newInstance('coco');
+        $this->assertInstanceOf(get_class(new SmartException()), $instance);
     }
 
     public function testClassIndexOverride()
     {
         $this->setExpectedException('RuntimeException');
-        (new SimpleFactory)->registerClass('Exception', 'std');
+        (new SimpleFactory())->registerClass('Exception', 'std');
     }
 
     public function testClassIndexOverrideCustom()
     {
-        (new SmartException)->registerClass('RuntimeException', 'sql');
-        $instance = (new SmartException)->newInstance('sql');
+        (new SmartException())->registerClass('RuntimeException', 'sql');
+        $instance = (new SmartException())->newInstance('sql');
         $this->assertInstanceOf('RuntimeException', $instance);
     }
 }
