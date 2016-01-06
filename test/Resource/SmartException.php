@@ -10,7 +10,6 @@ class SmartException extends \Exception
 
     protected function onClassIndexOverride($index)
     {
-        
     }
 
     protected function onNoClassIndexFound($index)
