@@ -3,7 +3,6 @@ Factory418
 [![Latest Stable Version](https://poser.pugx.org/baddum/factory418/v/stable.svg)](https://github.com/Baddum/Factory418)
 [![Build Status](https://travis-ci.org/Baddum/Factory418.png?branch=master)](https://travis-ci.org/Baddum/Factory418)
 [![Style Checking](https://styleci.io/repos/31263512/shield)](https://styleci.io/repos/31263512)
-[![Code Coverage](https://scrutinizer-ci.com/g/Baddum/Factory418/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/Baddum/Factory418/?branch=master)
 [![Total Downloads](https://poser.pugx.org/baddum/factory418/downloads.svg)](https://packagist.org/packages/baddum/factory418)
 [![License](https://poser.pugx.org/baddum/factory418/license.svg)](http://opensource.org/licenses/MIT)
 
